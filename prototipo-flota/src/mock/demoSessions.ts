@@ -34,5 +34,21 @@ export const DEMO_SESSIONS = [
     userId: "cond-2",
 
     branchId: "suc-1"
+  },
+
+  {
+    label: "Gestor de Solicitudes",
+
+    role: "request_manager",
+
+    branchId: "suc-1"
+  },
+
+  {
+    label: "Listado de Solicitudes",
+
+    role: "listado_solicitudes",
+
+    branchId: "suc-1"
   }
 ]

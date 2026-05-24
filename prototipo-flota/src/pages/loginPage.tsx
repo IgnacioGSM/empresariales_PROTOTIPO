@@ -49,6 +49,18 @@ function LoginPage() {
     ) {
       navigate("/incidents")
     }
+    if (
+      session.role ===
+      "request_manager"
+    ) {
+      navigate("/solicitudes/crear")
+    }
+    if (
+      session.role ===
+      "listado_solicitudes"
+    ) {
+      navigate("/solicitudes")
+    }
   }
 
 

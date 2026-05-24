@@ -1,0 +1,131 @@
+import {useEffect, useState} from "react";
+import {approveRequest, rejectRequest} from "../../services/requestService";
+import {getData} from "../../data/storage/localStorage";
+import type {Request} from "../../types/requests"; 
+import Navbar from "../../components/ui/Navbar";
+
+export default function SolicitudesList() {
+    const [requests, setRequests] = useState<Request[]>([]);
+
+    const loadRequests = () => {
+        setRequests(getData("solicitudes") || [])
+    }
+
+    useEffect(() => {
+        loadRequests()
+    }, [])
+
+    const handleApprove = (id: string) => {
+        try {
+            approveRequest({requestId: id, aprobadoPor: "Gestor de solicitudes"})
+            setRequests(getData("solicitudes") || [])
+        } catch (error) {
+            if (error instanceof Error) {
+                alert(error.message)
+            } else {
+                alert("Error desconocido")
+            }
+        }
+    }
+
+    const handleReject = (id: string) => {
+        try {
+            rejectRequest({requestId: id, rechazadoPor: "Gestor de solicitudes", motivoRechazo: "lero lero"})
+            setRequests(getData("solicitudes") || [])
+        } catch (error) {
+            if (error instanceof Error) {
+                alert(error.message)
+            } else {
+                alert("Error desconocido")
+            }
+        }
+    }
+    
+    return (
+    <div className="p-6 bg-bg min-h-screen">
+      <Navbar />
+      <h1 className="text-2xl font-bold text-primary mb-6">
+        Lista de Solicitudes
+      </h1>
+
+      {requests.length === 0 ? (
+        <p className="text-gray-600">
+          No hay solicitudes registradas.
+        </p>
+      ) : (
+        <table className="min-w-full border border-gray-300 bg-white shadow-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="border px-4 py-2">ID</th>
+              <th className="border px-4 py-2">Cliente</th>
+              <th className="border px-4 py-2">Destino</th>
+              <th className="border px-4 py-2">Carga</th>
+              <th className="border px-4 py-2">Fecha límite</th>
+              <th className="border px-4 py-2">Estado</th>
+              <th className="border px-4 py-2">Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {requests.map((req) => (
+              <tr key={req.id}>
+                <td className="border px-4 py-2">{req.id}</td>
+                <td className="border px-4 py-2">{req.cliente}</td>
+                <td className="border px-4 py-2">{req.destino}</td>
+                <td className="border px-4 py-2">
+                  {req.cargaRequerida} kg
+                </td>
+                <td className="border px-4 py-2">
+                  {req.fechaLimite}
+                </td>
+
+                {/* estado con color */}
+                <td className="border px-4 py-2">
+                  <span
+                    className={
+                      req.estado === "Pendiente"
+                        ? "text-yellow-600"
+                        : req.estado === "Aprobada"
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {req.estado}
+                  </span>
+                </td>
+
+                <td className="border px-4 py-2 space-x-2">
+                  {req.estado === "Pendiente" && (
+                    <>
+                      <button
+                        onClick={() => handleApprove(req.id)}
+                        className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                      >
+                        Aprobar
+                      </button>
+
+                      <button
+                        onClick={() => handleReject(req.id)}
+                        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                      >
+                        Rechazar
+                      </button>
+                    </>
+                  )}
+
+                  {/* listo para el siguiente paso */}
+                  {req.estado === "Aprobada" && req.trabajoId && (
+                    <button className="bg-blue-600 text-white px-3 py-1 rounded">
+                      Ver trabajo
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  )
+}
+
