@@ -3,13 +3,15 @@ export const VEHICLE_STATES = {
   ASSIGNED: "Asignado",
   IN_ROUTE: "En ruta",
   DAMAGED: "Averiado",
-  MAINTENANCE: "Mantenimiento"
+  MAINTENANCE: "Mantenimiento",
+  RETURNING: "Retornando"
 }
 
 export const DRIVER_STATES = {
   AVAILABLE: "Disponible",
   ASSIGNED: "Asignado",
-  IN_ROUTE: "En ruta"
+  IN_ROUTE: "En ruta",
+  RETURNING: "Retornando"
 }
 
 export const WORK_OPERATIONAL_STATES = {
@@ -47,5 +49,26 @@ export const ASSIGNMENT_RESULTS = {
 export const INCIDENT_SEVERITY = {
   LOW: "Baja",
   MEDIUM: "Media",
-  HIGH: "Alta"
+  HIGH: "Alta",
+  CRITICAL: "Crítica"
+}
+
+export const ROUTE_STATES = {
+
+  ACTIVE: "Activa",
+
+  RETURNING: "Retornando",
+
+  FINISHED: "Finalizada"
+}
+
+export const INCIDENT_STATES = {
+
+  OPEN: "Abierta",
+
+  IN_PROGRESS: "En atención",
+
+  RESOLVED: "Resuelta",
+
+  CLOSED: "Cerrada"
 }

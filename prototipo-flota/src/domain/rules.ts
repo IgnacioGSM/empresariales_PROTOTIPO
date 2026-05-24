@@ -13,7 +13,7 @@ import {
 |--------------------------------------------------------------------------
 */
 
-export function calculateDeliveredLoad(assignments) {
+export function calculateDeliveredLoad(assignments: any[]) {
 
   return assignments.reduce(
     (total, assignment) =>
@@ -30,7 +30,7 @@ export function calculateDeliveredLoad(assignments) {
 |--------------------------------------------------------------------------
 */
 
-export function hasActiveAssignments(assignments) {
+export function hasActiveAssignments(assignments: any[]) {
 
   return assignments.some(
     assignment =>
@@ -39,7 +39,7 @@ export function hasActiveAssignments(assignments) {
   )
 }
 
-export function hasConfirmedAssignments(assignments) {
+export function hasConfirmedAssignments(assignments: any[]) {
 
   return assignments.some(
     assignment =>
@@ -48,7 +48,7 @@ export function hasConfirmedAssignments(assignments) {
   )
 }
 
-export function allAssignmentsFinished(assignments) {
+export function allAssignmentsFinished(assignments: any[]) {
 
   return (
     assignments.length > 0 &&
@@ -75,7 +75,7 @@ export function allAssignmentsFinished(assignments) {
 */
 
 export function calculateWorkOperationalState(
-  assignments
+  assignments: any[]
 ) {
 
   if (!assignments.length) {
@@ -116,8 +116,8 @@ export function calculateWorkOperationalState(
 */
 
 export function calculateWorkResult(
-  work,
-  assignments
+  work: any,
+  assignments: any[]
 ) {
 
   const deliveredLoad =
@@ -165,8 +165,8 @@ export function calculateWorkResult(
 */
 
 export function calculateFinalWorkResult(
-  work,
-  assignments
+  work: any,
+  assignments: any[]
 ) {
 
   const deliveredLoad =
@@ -209,7 +209,7 @@ export function calculateFinalWorkResult(
 */
 
 export function isWorkOverdue(
-  work
+  work: any
 ) {
 
   const now = new Date()
@@ -229,7 +229,7 @@ export function isWorkOverdue(
 */
 
 export function hasPartialAssignments(
-  assignments
+  assignments: any[]
 ) {
 
   return assignments.some(
@@ -248,7 +248,7 @@ export function hasPartialAssignments(
 */
 
 export function hasFailedAssignments(
-  assignments
+  assignments: any[]
 ) {
 
   return assignments.some(

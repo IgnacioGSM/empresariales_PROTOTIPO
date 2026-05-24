@@ -4,7 +4,7 @@ import {
   ASSIGNMENT_OPERATIONAL_STATES
 } from "./states"
 
-export function canAssignVehicle(vehicle) {
+export function canAssignVehicle(vehicle: any) {
 
   return (
     vehicle.estado === VEHICLE_STATES.AVAILABLE &&
@@ -13,7 +13,7 @@ export function canAssignVehicle(vehicle) {
   )
 }
 
-export function canAssignDriver(driver) {
+export function canAssignDriver(driver: any) {
 
   return (
     driver.estado === DRIVER_STATES.AVAILABLE &&
@@ -23,17 +23,17 @@ export function canAssignDriver(driver) {
 }
 
 export function vehicleSupportsLoad(
-  vehicle,
-  requiredLoad
+  vehicle: any,
+  requiredLoad: number
 ) {
 
   return vehicle.capacidadCarga >= requiredLoad
 }
 
 export function canStartAssignment(
-  assignment,
-  vehicle,
-  driver
+  assignment: any,
+  vehicle: any,
+  driver: any
 ) {
 
   return (
@@ -47,7 +47,7 @@ export function canStartAssignment(
 }
 
 export function canFinishAssignment(
-  assignment
+  assignment: any
 ) {
 
   return (
@@ -57,7 +57,7 @@ export function canFinishAssignment(
 }
 
 export function canAbortAssignment(
-  assignment
+  assignment: any
 ) {
 
   return (
@@ -67,7 +67,7 @@ export function canAbortAssignment(
 }
 
 export function canSetAssignmentResult(
-  assignment
+  assignment: any
 ) {
 
   return (
