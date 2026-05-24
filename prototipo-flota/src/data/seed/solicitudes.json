@@ -1,0 +1,33 @@
+[
+  {
+    "id": "sol-1",
+
+    "cliente": "Constructora Sur",
+
+    "destino": "Valdivia",
+
+    "cargaRequerida": 2500,
+
+    "fechaLimite": "2026-05-30",
+
+    "estado": "Aprobada",
+
+    "trabajoId": "trab-1"
+  },
+
+  {
+    "id": "sol-2",
+
+    "cliente": "Retail Araucanía",
+
+    "destino": "Pucón",
+
+    "cargaRequerida": 1000,
+
+    "fechaLimite": "2026-06-02",
+
+    "estado": "Pendiente",
+
+    "trabajoId": null
+  }
+]
