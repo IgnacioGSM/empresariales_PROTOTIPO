@@ -14,7 +14,9 @@
 
     "fechaLimite": "2026-05-30",
 
-    "estado": "En proceso",
+    "estadoOperativo": "En proceso",
+
+    "resultado": null,
 
     "asignacionesIds": ["asig-1"]
   }
