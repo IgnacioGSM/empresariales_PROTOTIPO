@@ -1,0 +1,21 @@
+[
+  {
+    "id": "trab-1",
+
+    "solicitudId": "sol-1",
+
+    "cliente": "Constructora Sur",
+
+    "destino": "Valdivia",
+
+    "cargaTotalRequerida": 2500,
+
+    "cargaEntregada": 0,
+
+    "fechaLimite": "2026-05-30",
+
+    "estado": "En proceso",
+
+    "asignacionesIds": ["asig-1"]
+  }
+]
