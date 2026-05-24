@@ -1,0 +1,24 @@
+[
+  {
+    "id": "inc-1",
+
+    "rutaId": "ruta-1",
+
+    "tipo": "Vehiculo",
+
+    "gravedad": "Media",
+
+    "descripcion": "Pinchazo de neumático durante trayecto",
+
+    "danioEstimado": 120000,
+
+    "afectaEntrega": true,
+
+    "accionesTomadas": [
+      "Aviso a gestor de incidencias",
+      "Evaluación de retraso"
+    ],
+
+    "fecha": "2026-05-23T10:35:00"
+  }
+]

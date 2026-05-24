@@ -1,0 +1,29 @@
+[
+  {
+    "id": "ruta-1",
+
+    "asignacionId": "asig-1",
+
+    "horaInicio": "2026-05-23T09:00:00",
+
+    "horaFin": null,
+
+    "estado": "Activa",
+
+    "eventos": [
+      {
+        "fecha": "2026-05-23T09:00:00",
+        "tipo": "InicioRuta",
+        "descripcion": "Ruta iniciada desde sucursal"
+      },
+
+      {
+        "fecha": "2026-05-23T10:35:00",
+        "tipo": "Incidencia",
+        "descripcion": "Pinchazo de neumático"
+      }
+    ],
+
+    "incidenciasIds": ["inc-1"]
+  }
+]

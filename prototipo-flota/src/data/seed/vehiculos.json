@@ -1,0 +1,35 @@
+[
+  {
+    "id": "veh-1",
+
+    "patente": "ABCD12",
+
+    "capacidadCarga": 3000,
+
+    "sucursalId": "suc-1",
+
+    "estado": "En ruta",
+
+    "documentacionVigente": true,
+    "mantencionVigente": true,
+
+    "asignacionActivaId": "asig-1"
+  },
+
+  {
+    "id": "veh-2",
+
+    "patente": "EFGH34",
+
+    "capacidadCarga": 2000,
+
+    "sucursalId": "suc-1",
+
+    "estado": "Disponible",
+
+    "documentacionVigente": true,
+    "mantencionVigente": true,
+
+    "asignacionActivaId": null
+  }
+]

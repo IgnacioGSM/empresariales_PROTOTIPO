@@ -1,0 +1,29 @@
+[
+  {
+    "id": "cond-1",
+    "nombre": "Juan Pérez",
+
+    "sucursalId": "suc-1",
+
+    "estado": "En ruta",
+
+    "licenciaVigente": true,
+    "aptoMedicamente": true,
+
+    "asignacionActivaId": "asig-1"
+  },
+
+  {
+    "id": "cond-2",
+    "nombre": "María Soto",
+
+    "sucursalId": "suc-1",
+
+    "estado": "Disponible",
+
+    "licenciaVigente": true,
+    "aptoMedicamente": true,
+
+    "asignacionActivaId": null
+  }
+]

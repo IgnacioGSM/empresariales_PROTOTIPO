@@ -1,0 +1,28 @@
+[
+  {
+    "id": "asig-1",
+
+    "trabajoId": "trab-1",
+
+    "vehiculoId": "veh-1",
+
+    "conductorId": "cond-1",
+
+    "estadoOperativo": "Activa",
+
+    "resultado": null,
+
+    "cargaAsignada": 2500,
+
+    "rutaPlanificada": {
+      "origen": "Temuco",
+      "destino": "Valdivia",
+      "distanciaKm": 170,
+      "tiempoEstimadoMin": 150
+    },
+
+    "rutaRealId": "ruta-1",
+
+    "fechaCreacion": "2026-05-23T08:00:00"
+  }
+]
