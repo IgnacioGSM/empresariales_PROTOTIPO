@@ -80,9 +80,9 @@ export default function SolicitudesList() {
                 <td className="border px-4 py-2">
                   <span
                     className={
-                      req.estado === "Pendiente"
+                      req.estado.toLocaleLowerCase() === "pendiente"
                         ? "text-yellow-600"
-                        : req.estado === "Aprobada"
+                        : req.estado.toLocaleLowerCase() === "aprobada"
                         ? "text-green-600"
                         : "text-red-600"
                     }
@@ -92,7 +92,7 @@ export default function SolicitudesList() {
                 </td>
 
                 <td className="border px-4 py-2 space-x-2">
-                  {req.estado === "Pendiente" && (
+                  {req.estado.toLocaleLowerCase() === "pendiente" && (
                     <>
                       <button
                         onClick={() => handleApprove(req.id)}
@@ -111,7 +111,7 @@ export default function SolicitudesList() {
                   )}
 
                   {/* listo para el siguiente paso */}
-                  {req.estado === "Aprobada" && req.trabajoId && (
+                  {req.estado.toLocaleLowerCase() === "aprobada" && req.trabajoId && (
                     <button className="bg-blue-600 text-white px-3 py-1 rounded">
                       Ver trabajo
                     </button>
