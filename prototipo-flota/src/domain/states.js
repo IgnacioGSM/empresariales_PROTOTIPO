@@ -12,13 +12,17 @@ export const DRIVER_STATES = {
   IN_ROUTE: "En ruta"
 }
 
-export const WORK_STATES = {
+export const WORK_OPERATIONAL_STATES = {
   PENDING: "Pendiente",
   ASSIGNED: "Asignado",
   IN_PROGRESS: "En proceso",
-  PARTIAL: "Parcialmente completado",
-  COMPLETED: "Completado",
-  FAILED: "Fallado"
+  FINISHED: "Finalizado"
+}
+
+export const WORK_RESULTS = {
+  SUCCESS: "Exitoso",
+  PARTIAL: "Parcial",
+  FAILED: "Fallido"
 }
 
 export const REQUEST_STATES = {

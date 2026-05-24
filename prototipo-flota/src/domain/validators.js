@@ -37,8 +37,11 @@ export function canStartAssignment(
 ) {
 
   return (
-    assignment.estadoOperativo === ASSIGNMENT_OPERATIONAL_STATES.CONFIRMED &&
+    assignment.estadoOperativo ===
+      ASSIGNMENT_OPERATIONAL_STATES.CONFIRMED &&
+
     vehicle.estado === VEHICLE_STATES.ASSIGNED &&
+
     driver.estado === DRIVER_STATES.ASSIGNED
   )
 }
@@ -48,7 +51,8 @@ export function canFinishAssignment(
 ) {
 
   return (
-    assignment.estadoOperativo === ASSIGNMENT_OPERATIONAL_STATES.ACTIVE
+    assignment.estadoOperativo ===
+      ASSIGNMENT_OPERATIONAL_STATES.ACTIVE
   )
 }
 
@@ -57,6 +61,17 @@ export function canAbortAssignment(
 ) {
 
   return (
-    assignment.estadoOperativo === ASSIGNMENT_OPERATIONAL_STATES.CONFIRMED
+    assignment.estadoOperativo ===
+      ASSIGNMENT_OPERATIONAL_STATES.CONFIRMED
+  )
+}
+
+export function canSetAssignmentResult(
+  assignment
+) {
+
+  return (
+    assignment.estadoOperativo ===
+      ASSIGNMENT_OPERATIONAL_STATES.FINISHED
   )
 }
