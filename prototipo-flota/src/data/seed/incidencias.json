@@ -8,6 +8,8 @@
 
     "gravedad": "Media",
 
+    "estado": "Abierta",
+
     "descripcion": "Pinchazo de neumático durante trayecto",
 
     "danioEstimado": 120000,

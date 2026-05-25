@@ -361,7 +361,7 @@ export function addIncidentAction({
   }
 
 
-  incident.acciones.push(action)
+  incident.accionesTomadas.push(action)
 
 
   /*

@@ -7,7 +7,7 @@ import App from "./App"
 import LoginPage from "./pages/loginPage"
 import FleetManagerPage from "./pages/fleetManagerPage"
 import DriverPage from "./pages/driverPage"
-import IncidentManagerPage from "./pages/incidentManagerPage"
+import IncidenciasList from "./views/gestorIncidencias/incidenciasList"
 import CrearSolicitud from "./views/gestorSolicitudes/CrearSolicitud"
 import SolicitudesList from "./views/gestorSolicitudes/SolicitudesList"
 
@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
 
       {
         path: "/incidents",
-        element: <IncidentManagerPage />
+        element: <IncidenciasList />
       },
 
       {
