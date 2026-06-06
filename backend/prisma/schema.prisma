@@ -1,0 +1,208 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/*
+|--------------------------------------------------------------------------
+| SUCURSAL
+|--------------------------------------------------------------------------
+*/
+
+model Sucursal {
+  id          String      @id @default(uuid())
+  nombre      String
+  direccion   String
+
+  vehiculos   Vehiculo[]
+  conductores Conductor[]
+}
+
+/*
+|--------------------------------------------------------------------------
+| VEHICULO
+|--------------------------------------------------------------------------
+*/
+
+model Vehiculo {
+  id            String   @id @default(uuid())
+  patente       String   @unique
+  capacidad     Float
+  estado        String
+
+  sucursalId    String
+  sucursal      Sucursal @relation(fields: [sucursalId], references: [id])
+
+  asignaciones  Asignacion[]
+}
+
+/*
+|--------------------------------------------------------------------------
+| CONDUCTOR
+|--------------------------------------------------------------------------
+*/
+
+model Conductor {
+  id            String   @id @default(uuid())
+  nombre        String
+  estado        String
+
+  sucursalId    String
+  sucursal      Sucursal @relation(fields: [sucursalId], references: [id])
+
+  asignaciones  Asignacion[]
+}
+
+/*
+|--------------------------------------------------------------------------
+| SOLICITUD
+|--------------------------------------------------------------------------
+*/
+
+model Solicitud {
+  id              String   @id @default(uuid())
+  cliente         String
+  destino         String
+  cargaRequerida  Float
+  fechaLimite     DateTime
+  estado          String
+
+  trabajo         Trabajo?
+}
+
+/*
+|--------------------------------------------------------------------------
+| TRABAJO
+|--------------------------------------------------------------------------
+*/
+
+model Trabajo {
+  id              String   @id @default(uuid())
+
+  solicitudId     String   @unique
+  solicitud       Solicitud @relation(fields: [solicitudId], references: [id])
+
+  estado          String
+
+  cargaTotal      Float
+  cargaEntregada  Float
+
+  asignaciones    Asignacion[]
+}
+
+/*
+|--------------------------------------------------------------------------
+| ASIGNACION
+|--------------------------------------------------------------------------
+*/
+
+model Asignacion {
+  id              String   @id @default(uuid())
+
+  trabajoId       String
+  trabajo         Trabajo  @relation(fields: [trabajoId], references: [id])
+
+  vehiculoId      String
+  vehiculo        Vehiculo @relation(fields: [vehiculoId], references: [id])
+
+  conductorId     String
+  conductor       Conductor @relation(fields: [conductorId], references: [id])
+
+  estadoOperativo String
+  resultado       String?
+
+  ruta            Ruta?
+
+  fechaCreacion   DateTime @default(now())
+}
+
+/*
+|--------------------------------------------------------------------------
+| RUTA
+|--------------------------------------------------------------------------
+*/
+
+model Ruta {
+  id              String   @id @default(uuid())
+
+  asignacionId    String   @unique
+  asignacion      Asignacion @relation(fields: [asignacionId], references: [id])
+
+  estado          String
+
+  eventos         RutaEvento[]
+  incidencias     Incidencia[]
+}
+
+/*
+|--------------------------------------------------------------------------
+| EVENTOS DE RUTA
+|--------------------------------------------------------------------------
+*/
+
+model RutaEvento {
+  id          String   @id @default(uuid())
+
+  rutaId      String
+  ruta        Ruta     @relation(fields: [rutaId], references: [id])
+
+  tipo        String
+  descripcion String
+
+  metadata    Json?
+
+  fecha       DateTime @default(now())
+}
+
+/*
+|--------------------------------------------------------------------------
+| INCIDENCIA
+|--------------------------------------------------------------------------
+*/
+
+model Incidencia {
+  id              String   @id @default(uuid())
+
+  rutaId          String
+  ruta            Ruta     @relation(fields: [rutaId], references: [id])
+
+  estado          String
+  tipo            String
+  descripcion     String
+  gravedad        String
+
+  danoEstimado    Float?
+
+  reportadoPor    String
+
+  acciones        IncidenciaAccion[]
+
+  fechaCreacion   DateTime @default(now())
+  fechaCierre     DateTime?
+  cerradoPor      String?
+}
+
+/*
+|--------------------------------------------------------------------------
+| ACCIONES DE INCIDENCIA
+|--------------------------------------------------------------------------
+*/
+
+model IncidenciaAccion {
+  id              String   @id @default(uuid())
+
+  incidenciaId    String
+  incidencia      Incidencia @relation(fields: [incidenciaId], references: [id])
+
+  tipo            String
+  descripcion     String
+  realizadaPor    String
+
+  metadata        Json?
+
+  fecha           DateTime @default(now())
+}
