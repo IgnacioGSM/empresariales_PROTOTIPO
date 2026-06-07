@@ -127,6 +127,12 @@ model Asignacion {
   estadoOperativo String
   resultado       String?
 
+  // 🆕 NUEVO
+  cargaAsignada   Float
+  cargaEntregada  Float @default(0)
+
+  rutaPlanificada String?
+
   ruta            Ruta?
 
   fechaCreacion   DateTime @default(now())
@@ -145,6 +151,10 @@ model Ruta {
   asignacion      Asignacion @relation(fields: [asignacionId], references: [id])
 
   estado          String
+
+  // 🆕 nuevos campos
+  horaInicio      DateTime?
+  horaFin         DateTime?
 
   eventos         RutaEvento[]
   incidencias     Incidencia[]
