@@ -19,6 +19,8 @@ model Sucursal {
 
   vehiculos   Vehiculo[]
   conductores Conductor[]
+
+  usuarios    Usuario[]
 }
 
 /*
@@ -32,6 +34,9 @@ model Vehiculo {
   patente       String   @unique
   capacidad     Float
   estado        String
+
+  documentacionVigente Boolean @default(true)
+  mantencionVigente Boolean @default(true)
 
   sucursalId    String
   sucursal      Sucursal @relation(fields: [sucursalId], references: [id])
@@ -50,8 +55,12 @@ model Conductor {
   nombre        String
   estado        String
 
+  documentacionVigente Boolean @default(true)
+
   sucursalId    String
   sucursal      Sucursal @relation(fields: [sucursalId], references: [id])
+
+  usuario       Usuario?
 
   asignaciones  Asignacion[]
 }
@@ -205,4 +214,39 @@ model IncidenciaAccion {
   metadata        Json?
 
   fecha           DateTime @default(now())
+}
+
+/*
+|--------------------------------------------------------------------------
+| USUARIO
+|--------------------------------------------------------------------------
+*/
+
+enum RolUsuario {
+  ADMIN
+  FLEET_MANAGER
+  INCIDENT_MANAGER
+  REQUEST_MANAGER
+  DRIVER
+}
+
+model Usuario {
+  id           String @id @default(uuid())
+
+  email        String @unique
+
+  passwordHash String
+
+  nombre       String
+
+  rol          RolUsuario
+
+  sucursalId   String?
+  sucursal     Sucursal? @relation(fields: [sucursalId], references: [id])
+
+  conductorId  String? @unique
+  conductor    Conductor? @relation(fields: [conductorId], references: [id])
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
