@@ -5,7 +5,7 @@ import {
 
 import {
   WORK_OPERATIONAL_STATES
-} from "../domain/states"
+} from "../../../backend/domain/states"
 
 
 

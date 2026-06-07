@@ -9,7 +9,7 @@ import {
   ASSIGNMENT_RESULTS,
   VEHICLE_STATES,
   DRIVER_STATES
-} from "../domain/states"
+} from "../../../backend/domain/states"
 
 import {
   calculateDeliveredLoad,
@@ -17,7 +17,7 @@ import {
   calculateWorkResult,
   calculateFinalWorkResult,
   isWorkOverdue
-} from "../domain/rules"
+} from "../../../backend/domain/rules"
 
 
 

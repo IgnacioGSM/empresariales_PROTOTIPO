@@ -3,7 +3,7 @@ import { getData } from "../../data/storage/localStorage"
 import {
   DRIVER_STATES,
   ASSIGNMENT_OPERATIONAL_STATES
-} from "../../domain/states"
+} from "../../../../backend/domain/states"
 
 
 

@@ -1,5 +1,5 @@
 import prisma from "../prisma"
-import { WORK_OPERATIONAL_STATES } from "../../../prototipo-flota/src/domain/states"
+import { WORK_OPERATIONAL_STATES } from "../../domain/states"
 
 /*
 |--------------------------------------------------------------------------
