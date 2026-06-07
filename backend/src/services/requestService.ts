@@ -78,7 +78,7 @@ export async function approveRequest({ requestId, aprobadoPor } : { requestId: s
     const trabajo = await tx.trabajo.create({
       data: {
         solicitudId: requestId,
-        estado: "Pendiente",
+        estadoOperativo: "Pendiente",
 
         cargaTotal: solicitud.cargaRequerida,
         cargaEntregada: 0
@@ -105,8 +105,8 @@ export async function rejectRequest({
   motivoRechazo
 } : {
     requestId: string,
-    rechazadoPor: String,
-    motivoRechazo: String
+    rechazadoPor: string,
+    motivoRechazo: string
 }) {
 
   const solicitud = await prisma.solicitud.findUnique({
