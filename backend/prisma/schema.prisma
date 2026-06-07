@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 /*
@@ -86,7 +85,8 @@ model Trabajo {
   solicitudId     String   @unique
   solicitud       Solicitud @relation(fields: [solicitudId], references: [id])
 
-  estado          String
+  estadoOperativo String
+  resultado       String?
 
   cargaTotal      Float
   cargaEntregada  Float
