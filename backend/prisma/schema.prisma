@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 /*
@@ -64,14 +63,26 @@ model Conductor {
 */
 
 model Solicitud {
-  id              String   @id @default(uuid())
-  cliente         String
-  destino         String
-  cargaRequerida  Float
-  fechaLimite     DateTime
-  estado          String
+  id               String   @id @default(uuid())
+  cliente          String
+  destino          String
+  cargaRequerida   Float
+  fechaLimite      DateTime
+  estado           String
 
-  trabajo         Trabajo?
+  // 🆕 nuevos campos
+  descripcion      String?
+  fechaCreacion    DateTime @default(now())
+
+  fechaAprobacion  DateTime?
+  aprobadoPor      String?
+
+  fechaRechazo     DateTime?
+  rechazadoPor     String?
+  motivoRechazo    String?
+
+  // relación 1:1 con Trabajo
+  trabajo          Trabajo?
 }
 
 /*
