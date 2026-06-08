@@ -3,6 +3,7 @@ import {
 } from "react-router-dom"
 
 import App from "./App"
+import ProtectedRoute from "./components/protectedRoute"
 
 import LoginPage from "./pages/loginPage"
 import FleetManagerPage from "./pages/fleetManagerPage"
@@ -10,6 +11,7 @@ import DriverPage from "./pages/driverPage"
 import IncidenciasList from "./views/gestorIncidencias/incidenciasList"
 import CrearSolicitud from "./views/gestorSolicitudes/CrearSolicitud"
 import SolicitudesList from "./views/gestorSolicitudes/SolicitudesList"
+import UnauthorizedPage from "./pages/unauthorizedPage"
 
 
 export const router = createBrowserRouter([
@@ -25,27 +27,42 @@ export const router = createBrowserRouter([
 
       {
         path: "/fleet",
-        element: <FleetManagerPage />
+        element: <ProtectedRoute allowedRoles={["FLEET_MANAGER"]}>
+          <FleetManagerPage />
+        </ProtectedRoute>
       },
 
       {
         path: "/driver",
-        element: <DriverPage />
+        element: <ProtectedRoute allowedRoles={["DRIVER"]}>
+          <DriverPage />
+        </ProtectedRoute>
       },
 
       {
         path: "/incidents",
-        element: <IncidenciasList />
+        element: <ProtectedRoute allowedRoles={["INCIDENT_MANAGER"]}>
+          <IncidenciasList />
+        </ProtectedRoute>
       },
 
       {
         path: "/solicitudes",
-        element: <SolicitudesList />
+        element: <ProtectedRoute allowedRoles={["REQUEST_MANAGER"]}>
+          <SolicitudesList />
+        </ProtectedRoute>
       },
       
       {
         path: "/solicitudes/crear",
-        element: <CrearSolicitud />
+        element: <ProtectedRoute allowedRoles={["REQUEST_MANAGER"]}>
+          <CrearSolicitud />
+        </ProtectedRoute>
+      },
+
+      {
+        path: "/unauthorized",
+        element: <UnauthorizedPage />
       }
     ]
   }

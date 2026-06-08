@@ -1,181 +1,145 @@
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { DEMO_SESSIONS }
-from "../mock/demoSessions"
+import { useAuth } from "../contexts/authContext"
 
-import {
-  setCurrentSession
-}
-from "../services/selectors/sessionSelector"
+export default function LoginPage() {
 
-import Card
-from "../components/ui/Card"
+  const navigate = useNavigate()
 
-import PrimaryButton
-from "../components/ui/PrimaryButton"
+  const { login } = useAuth()
 
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
-function LoginPage() {
+  async function handleSubmit(e) {
 
-  const navigate =
-    useNavigate()
+    e.preventDefault()
 
+    setError("")
+    setLoading(true)
 
-  function handleSelect(session: any) {
+    try {
 
-    setCurrentSession(session)
+      const user =
+        await login(
+          email,
+          password
+        )
 
+      redirectByRole(user.rol)
 
-    if (
-      session.role ===
-      "fleet_manager"
-    ) {
-      navigate("/fleet")
-    }
+    } catch (error: any) {
 
+      setError(
+        error.response?.data?.message ||
+        "Error al iniciar sesión"
+      )
 
-    if (
-      session.role ===
-      "driver"
-    ) {
-      navigate("/driver")
-    }
+    } finally {
 
-
-    if (
-      session.role ===
-      "incident_manager"
-    ) {
-      navigate("/incidents")
-    }
-    if (
-      session.role ===
-      "request_manager"
-    ) {
-      navigate("/solicitudes/crear")
-    }
-    if (
-      session.role ===
-      "listado_solicitudes"
-    ) {
-      navigate("/solicitudes")
+      setLoading(false)
     }
   }
 
+  function redirectByRole(role) {
+
+    switch (role) {
+
+      case "ADMIN":
+        navigate("/admin")
+        break
+
+      case "FLEET_MANAGER":
+        navigate("/fleet")
+        break
+
+      case "INCIDENT_MANAGER":
+        navigate("/incidents")
+        break
+
+      case "REQUEST_MANAGER":
+        navigate("/requests")
+        break
+
+      case "DRIVER":
+        navigate("/driver")
+        break
+
+      default:
+        navigate("/")
+    }
+  }
 
   return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-100">
 
-    <div
-      className="
-        min-h-screen
-        bg-slate-100
-        flex
-        items-center
-        justify-center
-        p-6
-      "
-    >
+      <div className="w-full max-w-md bg-white rounded-xl shadow p-8">
 
-      <div
-        className="
-          w-full
-          max-w-3xl
-        "
-      >
-
-        <h1
-          className="
-            text-4xl
-            font-bold
-            text-center
-            mb-2
-          "
-        >
-          Gestión de Flota
+        <h1 className="text-2xl font-bold mb-6 text-center">
+          Sistema de Gestión de Flota
         </h1>
 
-        <p
-          className="
-            text-center
-            text-slate-600
-            mb-10
-          "
-        >
-          Selecciona un perfil demo
-        </p>
-
-
-        <div
-          className="
-            grid
-            grid-cols-1
-            md:grid-cols-2
-            gap-6
-          "
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4"
         >
 
-          {
-            DEMO_SESSIONS.map(
-              session => (
+          <div>
+            <label className="block mb-1 font-medium">
+              Correo
+            </label>
 
-                <Card
-                  key={session.label}
-                >
+            <input
+              type="email"
+              value={email}
+              onChange={e =>
+                setEmail(e.target.value)
+              }
+              className="w-full border rounded p-2"
+              required
+            />
+          </div>
 
-                  <div
-                    className="
-                      flex
-                      flex-col
-                      gap-4
-                    "
-                  >
+          <div>
+            <label className="block mb-1 font-medium">
+              Contraseña
+            </label>
 
-                    <div>
+            <input
+              type="password"
+              value={password}
+              onChange={e =>
+                setPassword(e.target.value)
+              }
+              className="w-full border rounded p-2"
+              required
+            />
+          </div>
 
-                      <h2
-                        className="
-                          text-xl
-                          font-semibold
-                        "
-                      >
-                        {session.label}
-                      </h2>
+          {error && (
+            <div className="text-red-600 text-sm">
+              {error}
+            </div>
+          )}
 
-                      <p
-                        className="
-                          text-slate-500
-                          mt-1
-                        "
-                      >
-                        {session.role}
-                      </p>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 rounded"
+          >
+            {loading
+              ? "Ingresando..."
+              : "Iniciar sesión"}
+          </button>
 
-                    </div>
-
-
-                    <PrimaryButton
-                      onClick={() =>
-                        handleSelect(session)
-                      }
-                    >
-                      Entrar
-                    </PrimaryButton>
-
-                  </div>
-
-                </Card>
-              )
-            )
-          }
-
-        </div>
+        </form>
 
       </div>
 
     </div>
   )
 }
-
-
-export default LoginPage

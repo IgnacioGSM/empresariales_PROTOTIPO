@@ -10,6 +10,8 @@ import { router } from "./router"
 import { initializeStorage }
 from "./data/storage/initializeStorage"
 
+import { AuthProvider } from "./contexts/authContext"
+
 import "./styles/global.css"
 
 
@@ -20,6 +22,8 @@ ReactDOM.createRoot(
   rootElement
 ).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 )
