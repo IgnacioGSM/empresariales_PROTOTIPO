@@ -5,7 +5,7 @@ import {
 
 import {
   INCIDENT_STATES
-} from "../domain/states"
+} from "../../../backend/domain/states"
 
 import {
   addRouteEvent

@@ -3,7 +3,7 @@ import {
   VEHICLE_STATES,
   DRIVER_STATES,
   ASSIGNMENT_OPERATIONAL_STATES
-} from "../../../prototipo-flota/src/domain/states"
+} from "../../domain/states"
 
 import {
   canAssignVehicle,
@@ -12,7 +12,7 @@ import {
   canStartAssignment,
   canFinishAssignment,
   canAbortAssignment
-} from "../../../prototipo-flota/src/domain/validators"
+} from "../../domain/validators"
 
 
 /*

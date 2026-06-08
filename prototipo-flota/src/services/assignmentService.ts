@@ -7,7 +7,7 @@ import {
   VEHICLE_STATES,
   DRIVER_STATES,
   ASSIGNMENT_OPERATIONAL_STATES
-} from "../domain/states"
+} from "../../../backend/domain/states"
 
 import {
   canAssignVehicle,
@@ -16,7 +16,7 @@ import {
   canStartAssignment,
   canFinishAssignment,
   canAbortAssignment
-} from "../domain/validators"
+} from "../../../backend/domain/validators"
 
 import {
   refreshWorkState

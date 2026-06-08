@@ -8,7 +8,7 @@ import {
   VEHICLE_STATES,
   DRIVER_STATES,
   ASSIGNMENT_OPERATIONAL_STATES
-} from "../domain/states"
+} from "../../../backend/domain/states"
 
 import {
   refreshWorkState
