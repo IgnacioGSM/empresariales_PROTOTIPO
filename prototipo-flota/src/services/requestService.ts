@@ -40,3 +40,27 @@ export async function createRequest(
 
   return response.data
 }
+
+export async function approveRequest(
+  id: string
+) {
+  const response = await api.post(
+    `/requests/${id}/approve`
+  )
+
+  return response.data
+}
+
+
+
+export async function rejectRequest(
+  id: string,
+  motivoRechazo: string
+) {
+  const response = await api.post(
+    `/requests/${id}/reject`,
+    { motivoRechazo }
+  )
+
+  return response.data
+}

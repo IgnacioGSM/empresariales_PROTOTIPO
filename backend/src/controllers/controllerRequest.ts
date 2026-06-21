@@ -102,7 +102,14 @@ export const approveRequestController = async (
   try {
 
     const { id } = req.params
-    const { aprobadoPor } = req.body
+    
+    const aprobadoPor = req.user?.userId
+
+    if (!aprobadoPor) {
+      return res.status(401).json({
+        message: "Usuario no autenticado"
+      })
+    }
 
     const result = await approveRequest({
       requestId: id,
@@ -133,7 +140,16 @@ export const rejectRequestController = async (
   try {
 
     const { id } = req.params
-    const { rechazadoPor, motivoRechazo } = req.body
+
+    const rechazadoPor = req.user?.userId
+
+    if (!rechazadoPor) {
+      return res.status(401).json({
+        message: "Usuario no autenticado"
+      })
+    }
+
+    const motivoRechazo = req.body.motivoRechazo
 
     const result = await rejectRequest({
       requestId: id,

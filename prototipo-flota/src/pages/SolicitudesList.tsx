@@ -1,6 +1,4 @@
 import {useEffect, useState} from "react";
-import {approveRequest, rejectRequest} from "../services/requestService_OLD";
-import {getData} from "../data/storage/localStorage";
 import type {Request} from "../types/requests"; 
 import * as requestService from "../services/requestService";
 import Navbar from "../components/ui/Navbar";
@@ -46,10 +44,10 @@ export default function SolicitudesList() {
         loadRequests()
     }, [])
 
-    const handleApprove = (id: string) => {
+    const handleApprove = async (id: string) => {
         try {
-            approveRequest({requestId: id, aprobadoPor: "Gestor de solicitudes"})
-            setRequests(getData("solicitudes") || [])
+            await requestService.approveRequest(id)
+            await loadRequests()
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)
@@ -59,10 +57,10 @@ export default function SolicitudesList() {
         }
     }
 
-    const handleReject = (id: string) => {
+    const handleReject = async (id: string) => {
         try {
-            rejectRequest({requestId: id, rechazadoPor: "Gestor de solicitudes", motivoRechazo: "lero lero"})
-            setRequests(getData("solicitudes") || [])
+            await requestService.rejectRequest(id, "Rechazo desde la interfaz")
+            await loadRequests()
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)
