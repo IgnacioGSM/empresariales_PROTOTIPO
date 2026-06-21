@@ -1,4 +1,4 @@
-import { useState }
+import { useEffect, useState }
 from "react"
 
 import Navbar
@@ -16,38 +16,71 @@ from "../components/ui/SectionTitle"
 import PrimaryButton
 from "../components/ui/PrimaryButton"
 
-import {
-  getCurrentSession
-}
-from "../services/selectors/sessionSelector"
 
-import {
-  getActiveWorks,
-  getAvailableResourcesByBranch
-}
-from "../services/selectors/fleetSelector"
+import * as workService from "../services/workService"
 
-import {
-  createAssignment
-}
-from "../services/assignmentService"
+import * as fleetService from "../services/fleetService"
 
-
+import * as assignmentService from "../services/assignmentService"
 
 function FleetManagerPage() {
 
-  const session =
-    getCurrentSession()
+  const [works, setWorks] =
+    useState([])
 
+  const [resources, setResources] =
+    useState({
+      vehiculos: [],
+      conductores: []
+    })
 
-  const works =
-    getActiveWorks()
+  //const [alerts, setAlerts] =
+  //  useState([])
 
+  async function loadData() {
 
-  const resources =
-    getAvailableResourcesByBranch(
-      session.branchId
-    )
+    try {
+
+      const [
+        worksData,
+        resourcesData,
+        //alertsData
+      ] = await Promise.all([
+
+        workService
+          .getActiveWorks(),
+
+        fleetService
+          .getResources(),
+
+        //fleetService
+        //  .getAlerts()
+      ])
+
+      setWorks(
+        worksData
+      )
+
+      setResources(
+        resourcesData
+      )
+
+      // setAlerts(
+      //   alertsData
+      // )
+      console.log("Works:", worksData)
+      console.log("Resources:", resourcesData)
+      //console.log("Alerts:", alertsData)
+
+    } catch (error) {
+
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    loadData()
+  }, [])
 
 
   const [
@@ -73,13 +106,45 @@ function FleetManagerPage() {
 
   ] = useState(null)
 
+  const [
+    selectedWorkName,
 
+    setSelectedWorkName
+  ] = useState(null)
 
-  function handleCreateAssignment() {
+  const [
+    selectedVehicleName,
+
+    setSelectedVehicleName
+  ] = useState(null)
+
+  const [
+    selectedVehicleLoad,
+
+    setSelectedVehicleLoad
+  ] = useState(null)
+
+  const [
+    selectedDriverName,
+
+    setSelectedDriverName
+  ] = useState(null)
+
+  async function handleCreateAssignment() {
 
     try {
 
-      createAssignment({
+      if (!selectedWorkId ||
+        !selectedVehicleId ||
+        !selectedDriverId
+      ) {
+        alert(
+          "Por favor, seleccione un trabajo, un vehículo y un conductor"
+        )
+        return
+      }
+
+      await assignmentService.createAssignment({
 
         trabajoId:
           selectedWorkId,
@@ -90,7 +155,8 @@ function FleetManagerPage() {
         conductorId:
           selectedDriverId,
 
-        cargaAsignada: 1000
+        cargaAsignada: Math.min(
+          selectedVehicleLoad || 0)
       })
 
 
@@ -190,7 +256,7 @@ function FleetManagerPage() {
                           font-bold
                         "
                       >
-                        {work.destino}
+                        {work.solicitud.destino}
                       </h3>
 
 
@@ -217,7 +283,7 @@ function FleetManagerPage() {
 
                         {" "}
 
-                        {work.cliente}
+                        {work.solicitud.cliente}
                       </p>
 
 
@@ -229,7 +295,7 @@ function FleetManagerPage() {
                         {" "}
 
                         {
-                          work.cargaTotalRequerida
+                          work.cargaTotal
                         }kg
                       </p>
 
@@ -251,9 +317,12 @@ function FleetManagerPage() {
 
                     <PrimaryButton
                       onClick={() =>
-                        setSelectedWorkId(
+                        {setSelectedWorkId(
                           work.id
                         )
+                        setSelectedWorkName(
+                          work.solicitud.destino
+                        )}
                       }
                     >
                       Seleccionar
@@ -294,7 +363,7 @@ function FleetManagerPage() {
             >
 
               {
-                (resources.vehicles as any[]).map(
+                (resources.vehiculos)?.map(
                   (vehicle: any) => (
 
                     <Card
@@ -349,7 +418,7 @@ function FleetManagerPage() {
                         {" "}
 
                         {
-                          vehicle.capacidadCarga
+                          vehicle.capacidad
                         }kg
 
                       </p>
@@ -357,9 +426,17 @@ function FleetManagerPage() {
 
                       <PrimaryButton
                         onClick={() =>
-                          setSelectedVehicleId(
-                            vehicle.id
-                          )
+                          {
+                            setSelectedVehicleId(
+                              vehicle.id
+                            );
+                            setSelectedVehicleName(
+                              vehicle.patente
+                            );
+                            setSelectedVehicleLoad(
+                              vehicle.capacidad
+                            );
+                          }
                         }
                       >
                         Seleccionar
@@ -401,7 +478,7 @@ function FleetManagerPage() {
             >
 
               {
-                (resources.drivers as any[]).map(
+                (resources.conductores)?.map(
                   (driver: any) => (
 
                     <Card
@@ -449,9 +526,14 @@ function FleetManagerPage() {
 
                       <PrimaryButton
                         onClick={() =>
-                          setSelectedDriverId(
-                            driver.id
-                          )
+                          {
+                            setSelectedDriverId(
+                              driver.id
+                            );
+                            setSelectedDriverName(
+                              driver.nombre
+                            );
+                          }
                         }
                       >
                         Seleccionar
@@ -493,7 +575,7 @@ function FleetManagerPage() {
                 Trabajo:
                 {" "}
                 {
-                  selectedWorkId ||
+                  selectedWorkName ||
                   "No seleccionado"
                 }
               </p>
@@ -503,7 +585,7 @@ function FleetManagerPage() {
                 Vehículo:
                 {" "}
                 {
-                  selectedVehicleId ||
+                  selectedVehicleName ||
                   "No seleccionado"
                 }
               </p>
@@ -513,7 +595,7 @@ function FleetManagerPage() {
                 Conductor:
                 {" "}
                 {
-                  selectedDriverId ||
+                  selectedDriverName ||
                   "No seleccionado"
                 }
               </p>

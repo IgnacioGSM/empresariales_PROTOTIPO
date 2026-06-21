@@ -13,6 +13,47 @@ import {
   isWorkOverdue
 } from "../../domain/rules.ts"
 
+
+/*|--------------------------------------------------------------------------
+| GET ACTIVE WORKS
+|--------------------------------------------------------------------------
+|
+*/
+
+export async function getActiveWorks() {
+
+  const works = await prisma.trabajo.findMany({
+    where: {
+      estadoOperativo: {
+        not: WORK_OPERATIONAL_STATES.FINISHED
+      }
+    },
+    include: {
+      asignaciones: true,
+      solicitud: true
+    }
+  })
+
+  return works.map(work => ({
+    id: work.id,
+    estadoOperativo: work.estadoOperativo,
+    resultado: work.resultado,
+    cargaTotal: work.cargaTotal,
+    cargaEntregada: work.cargaEntregada,
+    assignmentCount: work.asignaciones.length,
+    totalAssignedLoad: work.asignaciones.reduce(
+      (sum, assignment) => sum + assignment.cargaAsignada,
+      0
+    ),
+    remainingLoad: work.cargaTotal - work.cargaEntregada,
+    solicitud: {
+      cliente: work.solicitud.cliente,
+      destino: work.solicitud.destino,
+      fechaLimite: work.solicitud.fechaLimite.toISOString()
+    }
+  }))
+}
+
 /*
 |--------------------------------------------------------------------------
 | REFRESH WORK STATE

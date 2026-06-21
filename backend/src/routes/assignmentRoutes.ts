@@ -4,7 +4,7 @@ import {
   startAssignmentController,
   finishAssignmentController,
   abortAssignmentController
-} from "../controller/controllerAssignment.ts"
+} from "../controllers/controllerAssignment.ts"
 
 const router = Router()
 

@@ -1,10 +1,23 @@
 import type { Request, Response } from "express"
 import {
+    getActiveWorks,
     refreshWorkState,
     finalizeWork,
     finalizeOverdueWorks,
     reopenWork
 } from "../services/workService.ts"
+
+export const getActiveWorksController = async (req: Request, res: Response) => {
+    try {
+        const works = await getActiveWorks()
+
+        res.json(works)
+    } catch (error: any) {
+        res.status(400).json({
+            error: error.message
+        })
+    }
+}
 
 export const refreshWorkStateController = async (req: Request<{ id: string }>, res: Response) => {
     try {

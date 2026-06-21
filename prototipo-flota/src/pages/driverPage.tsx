@@ -26,7 +26,7 @@ from "../services/selectors/driverSelector"
 import {
   startAssignment
 }
-from "../services/assignmentService"
+from "../services/OLD_assignmentService"
 
 import {
   startReturn,

@@ -17,8 +17,7 @@ export function canAssignDriver(driver: any) {
 
   return (
     driver.estado === DRIVER_STATES.AVAILABLE &&
-    driver.licenciaVigente &&
-    driver.aptoMedicamente
+    driver.documentacionVigente
   )
 }
 
@@ -27,7 +26,7 @@ export function vehicleSupportsLoad(
   requiredLoad: number
 ) {
 
-  return vehicle.capacidadCarga >= requiredLoad
+  return vehicle.capacidad >= requiredLoad
 }
 
 export function canStartAssignment(
