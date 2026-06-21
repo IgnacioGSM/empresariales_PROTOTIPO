@@ -3,7 +3,7 @@ import {
     createRouteEvent,
     startReturnController,
     completeReturnController
-} from "../controller/controllerRoutes"
+} from "../controllers/controllerRoutes.ts"
 
 const router = Router()
 

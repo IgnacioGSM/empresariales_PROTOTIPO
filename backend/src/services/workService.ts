@@ -1,9 +1,9 @@
-import prisma from "../prisma"
+import prisma from "../prisma.ts"
 
 import {
     WORK_OPERATIONAL_STATES, 
     ASSIGNMENT_OPERATIONAL_STATES
-} from "../../domain/states"
+} from "../../domain/states.ts"
 
 import {
   calculateDeliveredLoad,
@@ -11,7 +11,7 @@ import {
   calculateWorkResult,
   calculateFinalWorkResult,
   isWorkOverdue
-} from "../../domain/rules"
+} from "../../domain/rules.ts"
 
 /*
 |--------------------------------------------------------------------------

@@ -4,7 +4,7 @@ import {
     closeWork,
     closeOverdueWorks,
     reopenWorkController
-} from "../controller/controllerWork"
+} from "../controllers/controllerWork.ts"
 
 const router = Router()
 

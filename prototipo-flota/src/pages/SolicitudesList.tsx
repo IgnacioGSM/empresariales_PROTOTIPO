@@ -1,24 +1,53 @@
 import {useEffect, useState} from "react";
-import {approveRequest, rejectRequest} from "../../services/requestService";
-import {getData} from "../../data/storage/localStorage";
-import type {Request} from "../../types/requests"; 
-import Navbar from "../../components/ui/Navbar";
+import type {Request} from "../types/requests"; 
+import * as requestService from "../services/requestService";
+import Navbar from "../components/ui/Navbar";
+import { useNavigate } from "react-router-dom";
 
 export default function SolicitudesList() {
+    const navigate = useNavigate()
+
     const [requests, setRequests] = useState<Request[]>([]);
 
-    const loadRequests = () => {
-        setRequests(getData("solicitudes") || [])
+    const [loading, setLoading] =
+      useState(true)
+
+    const [error, setError] =
+      useState("")
+
+    async function loadRequests() {
+
+      try {
+
+        setLoading(true)
+
+        const data =
+          await requestService
+            .getRequests()
+
+        setRequests(data)
+
+      } catch (error) {
+
+        setError(
+          "No se pudieron cargar las solicitudes: " +
+          (error instanceof Error ? error.message : "Error desconocido")
+        )
+
+      } finally {
+
+        setLoading(false)
+      }
     }
 
     useEffect(() => {
         loadRequests()
     }, [])
 
-    const handleApprove = (id: string) => {
+    const handleApprove = async (id: string) => {
         try {
-            approveRequest({requestId: id, aprobadoPor: "Gestor de solicitudes"})
-            setRequests(getData("solicitudes") || [])
+            await requestService.approveRequest(id)
+            await loadRequests()
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)
@@ -28,10 +57,10 @@ export default function SolicitudesList() {
         }
     }
 
-    const handleReject = (id: string) => {
+    const handleReject = async (id: string) => {
         try {
-            rejectRequest({requestId: id, rechazadoPor: "Gestor de solicitudes", motivoRechazo: "lero lero"})
-            setRequests(getData("solicitudes") || [])
+            await requestService.rejectRequest(id, "Rechazo desde la interfaz")
+            await loadRequests()
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)
@@ -40,10 +69,28 @@ export default function SolicitudesList() {
             }
         }
     }
+
+    const navigateToCrearSolicitud = () => {
+      navigate("/requests/new")
+    }
+
+    if (loading) {
+      return <p>Cargando...</p>
+    }
+
+    if (error) {
+      return <p>{error}</p>
+    }
     
     return (
     <div className="p-6 bg-bg min-h-screen">
       <Navbar />
+      <button
+        onClick={navigateToCrearSolicitud}
+        className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      >
+        Crear Nueva Solicitud
+      </button>
       <h1 className="text-2xl font-bold text-primary mb-6">
         Lista de Solicitudes
       </h1>

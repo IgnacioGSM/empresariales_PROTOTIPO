@@ -1,5 +1,6 @@
-import prisma from "../prisma"
-import { WORK_OPERATIONAL_STATES } from "../../domain/states"
+import prisma from "../prisma.ts"
+import { REQUEST_STATES } from "../../domain/states.ts"
+import { WORK_OPERATIONAL_STATES } from "../../domain/states.ts"
 
 /*
 |--------------------------------------------------------------------------
@@ -9,6 +10,20 @@ import { WORK_OPERATIONAL_STATES } from "../../domain/states"
 
 export async function getAllRequests() {
     return await prisma.solicitud.findMany({
+        include: {
+            trabajo: true
+        }
+    })
+}
+
+/*|--------------------------------------------------------------------------
+| GET REQUEST BY ID
+|--------------------------------------------------------------------------
+*/
+
+export async function getRequestById(requestId: string) {
+    return await prisma.solicitud.findUnique({
+        where: { id: requestId },
         include: {
             trabajo: true
         }
@@ -37,7 +52,7 @@ export async function createRequest(data: {
       cargaRequerida: data.capacidadCargaNecesaria,
       fechaLimite: new Date(data.fechaLimiteEntrega),
 
-      estado: "Pendiente",
+      estado: REQUEST_STATES.PENDING,
 
       descripcion: data.descripcion || "",
       fechaCreacion: new Date()
@@ -60,7 +75,7 @@ export async function approveRequest({ requestId, aprobadoPor } : { requestId: s
 
   if (!solicitud) throw new Error("Solicitud no encontrada")
 
-  if (solicitud.estado !== "Pendiente") {
+  if (solicitud.estado !== REQUEST_STATES.PENDING) {
     throw new Error("Solo solicitudes pendientes pueden aprobarse")
   }
 
@@ -69,7 +84,7 @@ export async function approveRequest({ requestId, aprobadoPor } : { requestId: s
     const updatedSolicitud = await tx.solicitud.update({
       where: { id: requestId },
       data: {
-        estado: "Aprobada",
+        estado: REQUEST_STATES.APPROVED,
         fechaAprobacion: new Date(),
         aprobadoPor
       }
@@ -78,7 +93,7 @@ export async function approveRequest({ requestId, aprobadoPor } : { requestId: s
     const trabajo = await tx.trabajo.create({
       data: {
         solicitudId: requestId,
-        estadoOperativo: "Pendiente",
+        estadoOperativo: WORK_OPERATIONAL_STATES.PENDING,
 
         cargaTotal: solicitud.cargaRequerida,
         cargaEntregada: 0
@@ -115,14 +130,14 @@ export async function rejectRequest({
 
   if (!solicitud) throw new Error("Solicitud no encontrada")
 
-  if (solicitud.estado !== "Pendiente") {
+  if (solicitud.estado !== REQUEST_STATES.PENDING) {
     throw new Error("Solo solicitudes pendientes pueden rechazarse")
   }
 
   return await prisma.solicitud.update({
     where: { id: requestId },
     data: {
-      estado: "Rechazada",
+      estado: REQUEST_STATES.REJECTED,
       fechaRechazo: new Date(),
       rechazadoPor,
       motivoRechazo

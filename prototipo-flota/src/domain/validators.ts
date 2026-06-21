@@ -2,7 +2,7 @@ import {
   VEHICLE_STATES,
   DRIVER_STATES,
   ASSIGNMENT_OPERATIONAL_STATES
-} from "./states.ts"
+} from "./states"
 
 export function canAssignVehicle(vehicle: any) {
 

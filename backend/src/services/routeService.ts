@@ -1,15 +1,15 @@
-import prisma from "../prisma"
+import prisma from "../prisma.ts"
 
 import {
   ROUTE_STATES,
   VEHICLE_STATES,
   DRIVER_STATES,
   ASSIGNMENT_OPERATIONAL_STATES
-} from "../../domain/states"
+} from "../../domain/states.ts"
 
 import {
     refreshWorkState
-} from "../services/workService"
+} from "../services/workService.ts"
 
 export async function addRouteEvent({
   routeId,

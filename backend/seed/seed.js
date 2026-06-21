@@ -282,7 +282,10 @@ async function main() {
           "Activa",
 
         resultado:
-          null
+          null ,
+
+        cargaAsignada:
+          5000
       }
     })
   

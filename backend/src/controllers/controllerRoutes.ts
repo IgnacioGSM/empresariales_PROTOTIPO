@@ -1,10 +1,10 @@
-import { Request, Response } from "express"
+import type { Request, Response } from "express"
 
 import {
     addRouteEvent,
     startReturn,
     completeReturn
-} from "../services/routeService"
+} from "../services/routeService.ts"
 
 export const createRouteEvent = async (req: Request, res: Response) => {
     try {

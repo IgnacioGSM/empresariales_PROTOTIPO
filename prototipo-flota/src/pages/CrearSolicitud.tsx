@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { createRequest } from "../../services/requestService"
-import Navbar from "../../components/ui/Navbar"
+import * as requestService from "../services/requestService"
+import Navbar from "../components/ui/Navbar"
+import { useNavigate } from "react-router-dom"
 
 type FormState = {
   cliente: string
@@ -31,6 +32,12 @@ export default function CrearSolicitud() {
     }))
   }
 
+  const navigate = useNavigate()
+
+  const navigateToList = () => {
+    navigate("/requests")
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -52,7 +59,7 @@ export default function CrearSolicitud() {
         throw new Error("La carga debe ser un número válido")
       }
 
-      createRequest({
+      requestService.createRequest({
         cliente: form.cliente,
         destino: form.destino,
         capacidadCargaNecesaria: carga,
@@ -67,6 +74,7 @@ export default function CrearSolicitud() {
       })
 
       alert("Solicitud creada correctamente")
+      navigateToList()
 
     } catch (error) {
       if (error instanceof Error) {
@@ -83,6 +91,13 @@ export default function CrearSolicitud() {
 
     <div className="p-6 bg-bg min-h-screen">
       <Navbar />
+      <button
+        onClick={navigateToList}
+        className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      >
+        Volver a la lista de solicitudes
+      </button>
+
       <h1 className="text-2xl font-bold text-primary mb-6">
         Crear Solicitud de Trabajo
       </h1>

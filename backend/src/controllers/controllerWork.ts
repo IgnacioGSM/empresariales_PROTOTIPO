@@ -1,10 +1,10 @@
-import { Request, Response } from "express"
+import type { Request, Response } from "express"
 import {
     refreshWorkState,
     finalizeWork,
     finalizeOverdueWorks,
     reopenWork
-} from "../services/workService"
+} from "../services/workService.ts"
 
 export const refreshWorkStateController = async (req: Request<{ id: string }>, res: Response) => {
     try {

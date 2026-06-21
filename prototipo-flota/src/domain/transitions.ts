@@ -4,7 +4,7 @@ import {
   ASSIGNMENT_OPERATIONAL_STATES,
   WORK_OPERATIONAL_STATES,
   ROUTE_STATES
-} from "./states.ts"
+} from "./states"
 
 export const VEHICLE_TRANSITIONS = {
 
