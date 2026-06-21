@@ -1,14 +1,42 @@
 import {useEffect, useState} from "react";
-import {approveRequest, rejectRequest} from "../../services/requestService";
-import {getData} from "../../data/storage/localStorage";
-import type {Request} from "../../types/requests"; 
-import Navbar from "../../components/ui/Navbar";
+import {approveRequest, rejectRequest} from "../services/requestService_OLD";
+import {getData} from "../data/storage/localStorage";
+import type {Request} from "../types/requests"; 
+import * as requestService from "../services/requestService";
+import Navbar from "../components/ui/Navbar";
 
 export default function SolicitudesList() {
     const [requests, setRequests] = useState<Request[]>([]);
 
-    const loadRequests = () => {
-        setRequests(getData("solicitudes") || [])
+    const [loading, setLoading] =
+      useState(true)
+
+    const [error, setError] =
+      useState("")
+
+    async function loadRequests() {
+
+      try {
+
+        setLoading(true)
+
+        const data =
+          await requestService
+            .getRequests()
+
+        setRequests(data)
+
+      } catch (error) {
+
+        setError(
+          "No se pudieron cargar las solicitudes: " +
+          (error instanceof Error ? error.message : "Error desconocido")
+        )
+
+      } finally {
+
+        setLoading(false)
+      }
     }
 
     useEffect(() => {
@@ -39,6 +67,13 @@ export default function SolicitudesList() {
                 alert("Error desconocido")
             }
         }
+    }
+    if (loading) {
+      return <p>Cargando...</p>
+    }
+
+    if (error) {
+      return <p>{error}</p>
     }
     
     return (

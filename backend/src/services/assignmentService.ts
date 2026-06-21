@@ -1,9 +1,9 @@
-import prisma from "../prisma"
+import prisma from "../prisma.ts"
 import {
   VEHICLE_STATES,
   DRIVER_STATES,
   ASSIGNMENT_OPERATIONAL_STATES
-} from "../../domain/states"
+} from "../../domain/states.ts"
 
 import {
   canAssignVehicle,
@@ -12,7 +12,7 @@ import {
   canStartAssignment,
   canFinishAssignment,
   canAbortAssignment
-} from "../../domain/validators"
+} from "../../domain/validators.ts"
 
 
 /*

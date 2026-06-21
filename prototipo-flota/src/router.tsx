@@ -9,8 +9,8 @@ import LoginPage from "./pages/loginPage"
 import FleetManagerPage from "./pages/fleetManagerPage"
 import DriverPage from "./pages/driverPage"
 import IncidenciasList from "./views/gestorIncidencias/incidenciasList"
-import CrearSolicitud from "./views/gestorSolicitudes/CrearSolicitud"
-import SolicitudesList from "./views/gestorSolicitudes/SolicitudesList"
+import CrearSolicitud from "./pages/CrearSolicitud"
+import SolicitudesList from "./pages/SolicitudesList"
 import UnauthorizedPage from "./pages/unauthorizedPage"
 
 
@@ -47,14 +47,14 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: "/solicitudes",
+        path: "/requests",
         element: <ProtectedRoute allowedRoles={["REQUEST_MANAGER"]}>
           <SolicitudesList />
         </ProtectedRoute>
       },
       
       {
-        path: "/solicitudes/crear",
+        path: "/requests/create",
         element: <ProtectedRoute allowedRoles={["REQUEST_MANAGER"]}>
           <CrearSolicitud />
         </ProtectedRoute>

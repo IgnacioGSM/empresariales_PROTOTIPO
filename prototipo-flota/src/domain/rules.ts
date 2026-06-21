@@ -3,7 +3,7 @@ import {
   WORK_RESULTS,
   ASSIGNMENT_OPERATIONAL_STATES,
   ASSIGNMENT_RESULTS
-} from "./states.ts"
+} from "./states"
 
 
 

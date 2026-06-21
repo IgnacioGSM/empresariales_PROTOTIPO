@@ -1,9 +1,68 @@
-import { Request, Response } from "express"
+import type { Request, Response } from "express"
 import {
+  getAllRequests,
+  getRequestById,
   createRequest,
   approveRequest,
   rejectRequest
-} from "../services/requestService"
+} from "../services/requestService.ts"
+
+
+/*|--------------------------------------------------------------------------
+| GET ALL REQUESTS
+|--------------------------------------------------------------------------
+*/
+
+export const getAllRequestsController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+
+    const result = await getAllRequests()
+
+    res.json(result)
+
+  } catch (error: any) {
+
+    res.status(400).json({
+      message: error.message
+    })
+
+  }
+}
+
+/*|--------------------------------------------------------------------------
+| GET REQUEST BY ID
+|--------------------------------------------------------------------------
+*/
+
+export const getRequestByIdController = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
+  try {
+
+    const { id } = req.params
+
+    const result = await getRequestById(id)
+
+    if (!result) {
+      return res.status(404).json({
+        message: "Solicitud no encontrada"
+      })
+    }
+
+    res.json(result)
+
+  } catch (error: any) {
+
+    res.status(400).json({
+      message: error.message
+    })
+
+  }
+}
 
 /*
 |--------------------------------------------------------------------------

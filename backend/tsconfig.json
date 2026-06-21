@@ -4,6 +4,8 @@
     "module": "CommonJS",
     "types": ["node"],
     "allowJs": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
     "skipLibCheck": true

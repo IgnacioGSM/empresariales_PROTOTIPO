@@ -1,10 +1,10 @@
-import { Request, Response } from "express"
+import type { Request, Response } from "express";
 import {
   createAssignment,
   startAssignment,
   finishAssignment,
   abortAssignment
-} from "../services/assignmentService"
+} from "../services/assignmentService.ts"
 
 /*
 |--------------------------------------------------------------------------
