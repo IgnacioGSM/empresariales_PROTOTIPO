@@ -21,6 +21,9 @@ app.get("/", (req, res) => {
 })
 
 // routes
+app.use("/requests", requestRoutes)
+app.use("/works", workRoutes)
 app.use("/assignments", assignmentRoutes)
+app.use("/routes", routeRoutes)
 
 export default app
