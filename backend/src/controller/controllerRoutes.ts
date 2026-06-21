@@ -38,3 +38,15 @@ export const startReturnController = async (req: Request, res: Response) => {
         res.status(400).json({ error: error.message })
     }
 }
+
+export const completeReturnController = async (req: Request<{ id: string }>, res: Response) => {
+    try {
+        const { id } = req.params
+
+        const route = await completeReturn(id)
+
+        res.json(route)
+    } catch (error: any) {
+        res.status(400).json({ error: error.message})
+    }
+}

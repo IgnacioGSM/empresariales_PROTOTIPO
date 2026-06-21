@@ -6,6 +6,7 @@ import cors from "cors"
 import assignmentRoutes from "./routes/assignmentRoutes"
 import workRoutes from "./routes/workRoutes"
 import requestRoutes from "./routes/requestRoutes"
+import routeRoutes from "./routes/routeRoutes"
 // (luego agregarás requestRoutes, etc)
 
 const app = express()
