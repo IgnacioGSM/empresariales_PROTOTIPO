@@ -4,8 +4,11 @@ import {getData} from "../data/storage/localStorage";
 import type {Request} from "../types/requests"; 
 import * as requestService from "../services/requestService";
 import Navbar from "../components/ui/Navbar";
+import { useNavigate } from "react-router-dom";
 
 export default function SolicitudesList() {
+    const navigate = useNavigate()
+
     const [requests, setRequests] = useState<Request[]>([]);
 
     const [loading, setLoading] =
@@ -68,6 +71,11 @@ export default function SolicitudesList() {
             }
         }
     }
+
+    const navigateToCrearSolicitud = () => {
+      navigate("/requests/new")
+    }
+
     if (loading) {
       return <p>Cargando...</p>
     }
@@ -79,6 +87,12 @@ export default function SolicitudesList() {
     return (
     <div className="p-6 bg-bg min-h-screen">
       <Navbar />
+      <button
+        onClick={navigateToCrearSolicitud}
+        className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      >
+        Crear Nueva Solicitud
+      </button>
       <h1 className="text-2xl font-bold text-primary mb-6">
         Lista de Solicitudes
       </h1>

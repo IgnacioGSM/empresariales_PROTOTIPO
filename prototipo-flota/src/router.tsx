@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
       },
       
       {
-        path: "/requests/create",
+        path: "/requests/new",
         element: <ProtectedRoute allowedRoles={["REQUEST_MANAGER"]}>
           <CrearSolicitud />
         </ProtectedRoute>

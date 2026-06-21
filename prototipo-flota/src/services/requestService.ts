@@ -34,7 +34,7 @@ export async function createRequest(
 
   const response =
     await api.post(
-      "/solicitudes",
+      "/requests",
       data
     )
 

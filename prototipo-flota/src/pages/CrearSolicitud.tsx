@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { createRequest } from "../services/requestService_OLD"
+import * as requestService from "../services/requestService"
 import Navbar from "../components/ui/Navbar"
 
 type FormState = {
@@ -52,7 +52,7 @@ export default function CrearSolicitud() {
         throw new Error("La carga debe ser un número válido")
       }
 
-      createRequest({
+      requestService.createRequest({
         cliente: form.cliente,
         destino: form.destino,
         capacidadCargaNecesaria: carga,
